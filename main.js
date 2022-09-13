@@ -1,12 +1,14 @@
 document.getElementById('issueInputForm').addEventListener('submit', submitIssue);
 
+let status = 'Open';
+
 function submitIssue(e) {
   const getInputValue = id => document.getElementById(id).value;
   const description = getInputValue('issueDescription');
   const severity = getInputValue('issueSeverity');
   const assignedTo = getInputValue('issueAssignedTo');
   const id = Math.floor(Math.random()*100000000) + '';
-  const status = 'Open';
+  // const status = 'Open';
 
   const issue = { id, description, severity, assignedTo, status };
   let issues = [];
@@ -21,7 +23,8 @@ function submitIssue(e) {
   e.preventDefault();
 }
 
-const closeIssue = id => {
+// const closeIssue = id => {
+const setStatusClosed = id => {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const currentIssue = issues.find(issue => issue.id === id);
   currentIssue.status = 'Closed';
@@ -50,7 +53,7 @@ const fetchIssues = () => {
                               <h3> ${description} </h3>
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
-                              <a href="#" onclick="setStatusClosed(${id})" class="btn btn-warning">Close</a>
+                              <a href="#" onclick="setStatusClosed('${id}')" class="btn btn-warning">Close</a>
                               <a href="#" onclick="deleteIssue('${id}')" class="btn btn-danger">Delete</a>
                               </div>`;
   }
